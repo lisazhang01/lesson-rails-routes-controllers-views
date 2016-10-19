@@ -6,7 +6,7 @@ class CourseRecipesController < RecipesController #Change inheritance from Appli
 #     render 'reciples/index'
 # end
 
-protected
+private
   def get_recipes
     if not @course.nil? #if course does exist
       @recipes = @course.recipes
@@ -21,18 +21,6 @@ protected
     end
   end
 
-#Ugly method
-  # def get_recipe
-  #   if @course.nil?
-  #     @recipe = nil
-  #     @message = "Course cannt be found"
-  #   else
-  #     @recipe = @course.recipes.find_by(id: params[:id])
-  #     @message = "Cannot find recipe with ID #{params[:id]}" if @recipe.nil?
-  #   end
-  # end
-
-private
   def set_course
     @course = Course.find_by(id: params[:course_id]) #if can't find it, find_by will give a nil, whereas find will return an error
     if @course.nil?

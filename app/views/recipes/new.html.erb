@@ -1,44 +1,6 @@
 <h1>New Recipe</h1>
 
-<!-- Shows error message if input is incorrect -->
-<div class="errors">
-  <% if @errors%>
-    <ul style="color: red;">
-      <% @errors.each do |key, messages| %>
-        <% messages.each do |message| %>
-          <li><%= key.to_s.capitalize %> - <%= message %></li>
-        <% end %>
-      <% end %>
-    </ul>
-  <% end %>
-</div>
+<%= render "form", {button_message: "Create Recipe"} %>
 
-<!-- Input fields -->
-<%= form_for @recipe do |f| %>
-  <div class="field">
-    <label for="recipe_name">Name</label>
-    <input type="text" name="recipe[name]" id="recipe_name" value="<%= @recipe.name %>">
-    <!-- name of input has to be recipe[name] format otherwise the form would not send -->
-    <!-- value="<%= @recipe.name %>" will retain the info even when page is refreshed -->
-  </div>
-  <div class="field">
-    <label for="recipe_servings">Servings</label>
-    <input type="number" name="recipe[servings]" id="recipe_servings" value="<%= @recipe.servings %>">
-  </div>
-  <div class="field">
-    <label for="recipe_instructions">Instructions</label>
-    <input type="text" name="recipe[instructions]" id="recipe_instructions" value="<%= @recipe.instructions %>">
-  </div>
-  <div class="field">
-    <label for="recipe_instructions">Course</label>
-    <select name="recipe[course_id]">
-      <% @courses.each do |course| %>
-        <option value="<%= course[1] %>" <%= 'selected' if @recipe.course_id == course[1] %>><%= course[0] %></option>
-        <!-- <%= 'selected' if @recipe.course_id == course[1] %> keep the selected value of the drop down list even on refresh -->
-      <% end %>
-    </select>
-  </div>
-  <div class="actions">
-    <button type="submit">Create Recipe</button>
-  </div>
-<% end %>
+
+
