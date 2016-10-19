@@ -1,0 +1,9 @@
+<h1>Recipes</h1>
+<ul>
+  <% @recipes.each do |recipe| %>
+    <li><a href="<%= @parent_path %>/recipes/<%= recipe.id %>"><%= recipe.name %></a></li>
+  <%end%>
+</ul>
+
+<!-- if the back button is clicked, take the page back to it's parent, or home page if there isn't any more parent -->
+<a href="<%= @parent_resource %>">Back</a>
