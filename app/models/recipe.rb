@@ -1,9 +1,11 @@
 class Recipe < ActiveRecord::Base
+#Defines relationship to other models
   belongs_to :course
 
   has_many :recipe_ingredient_lists
   has_many :ingredients, through: :recipe_ingredient_lists
 
+#Valides input field requirements
   validates :name, :instructions, :servings, :course_id, presence: true
   validates :name, uniqueness: true
   validates :name, length: { minimum: 2 }

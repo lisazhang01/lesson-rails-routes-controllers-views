@@ -1,15 +1,18 @@
+<!-- Links to recipes controller -->
 <h1>Recipes</h1>
 
+<!-- Displays any error messages if inputs do not match requirement -->
 <% if @message %>
   <h2><%= @message %></h2>
 <% end %>
 
+<!-- List recipes -->
 <ul>
   <% @recipes.each do |recipe| %>
     <li>
       <a href="<%= @parent_path %>/recipes/<%= recipe.id %>"><%= recipe.name %></a>
       <a href="<%= "/recipes/#{recipe.id}/edit" %>"><button>Edit</button></a>
-      <%= form_tag "/recipes/#{recipe.id}", {method: "delete", style: "display: inline;"} do %>
+      <a href="<%= @recipes %>"><%= form_tag "/recipes/#{recipe.id}", {method: "delete", style: "display: inline;"} do %>
         <button type="submit">Delete</button>
       <% end %>
     </li>

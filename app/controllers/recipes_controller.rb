@@ -54,41 +54,51 @@ class RecipesController < ApplicationController
   end
 
 #Delete recipe
-  def delete
-    if @recipe.destroy
-
-    else
-
+  def destroy
+    if !@recipe.nil? #build in this just to be sure
+      @recipe.destroy
     end
+      redirect_to "#{@parent_path}#{recipes_path}" #recipes_path is a get resource prefix
   end
 
 
 private
-  def get_recipes
-    @recipes = Recipe.all
+
+#Save all recipes to variables so it can be used later
+  def set_recipes
+    @recipes = Recipe.includes(:ingredients).all #includes will cache the ingredients info and keep it there for later use, instead of querying again for this info later when it is needed
     @message = "No Recipes Found" if @recipes.empty?
   end
 
+#Finds recipe by id
   def set_recipe
     @recipe  = Recipe.find_by(id: params[:id])
     @message = "Cannot find recipe with id #{params[:id]}"
   end
 
+#Errors for
   def set_errors
-    @courses = flash[:errors]
+    @errors = flash[:errors]
   end
 
+#Grabs list of course names
   def set_courses_category
-    @courses = Course.order(:name).pluck(:name, :id)
+    @courses_categories = Course.order(:name).pluck(:name, :id)
   end
 
+#Set parent path to home or current page, used in recipe index.html
   def set_parent_path
     @parent_resource = "/"
     @parent_path     = ""
   end
 
-  def recipe_params #Strong params: checks input to see if keys match the ones that we want and not different
+#Strong params: checks input to see if keys match the ones that we want and not different
+  def recipe_params
     params.require(:recipe).permit(:name, :instructions, :servings, :course_id)
+  end
+
+  def recipe_ingredients_params
+    params.require(:recipe).permit(:ingredients)
   end
 
 end

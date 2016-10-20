@@ -1,13 +1,10 @@
 class CourseRecipesController < RecipesController #Change inheritance from ApplicationController to RecipeController
   before_action :set_course
 
-# def index #this is inherited from recipecontroller
-#     get_recipes #this refers to the protected get_recipe here
-#     render 'reciples/index'
-# end
+# public methods are inherited from recipecontroller
 
 private
-  def get_recipes
+  def set_recipes
     if not @course.nil? #if course does exist
       @recipes = @course.recipes
       @message = "No recipes found" if @recipes.empty? #if recipes is empty give msg
@@ -22,10 +19,10 @@ private
   end
 
   def set_course
-    @course = Course.find_by(id: params[:course_id]) #if can't find it, find_by will give a nil, whereas find will return an error
+    @course = Course.find_by(name: params[:course_id]) #if can't find it, find_by will give a nil, whereas find will return an error
     if @course.nil?
       @recipes = []
-      @recipe = []
+      @recipe = nil
       @message = "Course Cannot be Found"
     end
   end
